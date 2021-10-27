@@ -1,7 +1,10 @@
 package org.firstinspires.ftc.teamcode.OpModes;
 
+import android.util.Log;
+
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.Hardware.HardwareProfile;
 
@@ -15,14 +18,16 @@ public class Competition_TeleOp extends LinearOpMode {
     double drive;
     double turn;
     double max;
-    double Spin;
+    double carouselSpin;
     double maxSpin = 0.1;
-    boolean Rbumber = false;
-    boolean Lbumber = false;
-    double SpeedMod = 0.5;
-    double SpeedMod_ClipMin = 0.25;
+    int Counter = 0;
+    double SpeedMod = 0.75;
+    double SpeedMod_ClipMin = 0.5;
     double SpeedMod_ClipMax =1;
-
+    double clawSpeed = 0.004;
+    double rightClaw = 0;
+    double leftClaw = 0;
+    boolean carouselOn = false;
     /**
      * This function is executed when this Op Mode is selected from the Driver Station.
      */
@@ -40,25 +45,22 @@ public class Competition_TeleOp extends LinearOpMode {
         waitForStart();
         if (opModeIsActive()) {
             while (opModeIsActive()) {
+
                 drive = -gamepad1.left_stick_y;
                 turn  =  gamepad1.right_stick_x;
-                Spin = gamepad2.left_stick_x;
 
+                if (gamepad1.dpad_up)
+                {
+                    SpeedMod = SpeedMod + 0.0001;
 
-                if (gamepad1.right_bumper = !Rbumber)
-                {
-                    SpeedMod = SpeedMod + 0.1;
-                    telemetry.addData("", "DUP");
-                    telemetry.update();
                 }
-                if (gamepad1.left_bumper = !Lbumber)
+
+                if (gamepad1.dpad_down)
                 {
-                  SpeedMod = SpeedMod - 0.1;
-                    telemetry.addData("", "DD");
-                    telemetry.update();
+                  SpeedMod = SpeedMod - 0.0001;
+
                 }
-                Rbumber = gamepad1.right_bumper;
-                Lbumber = gamepad1.left_bumper;
+
                 // Combine drive and turn for blended motion.
                 left  = drive + turn;
                 right = drive - turn;
@@ -79,15 +81,38 @@ public class Competition_TeleOp extends LinearOpMode {
                 {
                     SpeedMod = SpeedMod_ClipMin;
                 }
-
-
-                // Output the safe vales to the motor drives
                 robot.RearLeftDrive.setPower(SpeedMod * left);
                 robot.RearRightDrive.setPower(SpeedMod * right);
                 robot.FrontLeftDrive.setPower(SpeedMod * left);
                 robot.FrontRightDrive.setPower(SpeedMod * right);
-                robot.Carousel.setPower(Spin * maxSpin);
+                if (gamepad2.dpad_left) {
+                    robot.Carousel.setPower(maxSpin);
+                    carouselOn = true;
+                }
+                else if (gamepad2.dpad_left == false) {
+                    robot.Carousel.setPower(0);
+                    carouselOn = false;
+                }
                 telemetry.addData("Power", SpeedMod);
+
+                if (gamepad2.left_bumper) {
+                    rightClaw -= clawSpeed;
+                    leftClaw += clawSpeed;
+                }
+                else if (gamepad2.right_bumper) {
+                    rightClaw += clawSpeed;
+                    leftClaw -= clawSpeed;
+                }
+                rightClaw = Range.clip(rightClaw, -0.5, 0.5);
+                Log.d("", " clawOffset:" + String.valueOf(rightClaw));
+                robot.ClawServoRight.setPosition(0.5 + rightClaw);
+
+                leftClaw = Range.clip(leftClaw, -0.5, 0.5);
+                Log.d("", " clawOffset:" + String.valueOf(leftClaw));
+                robot.ClawServoLeft.setPosition(0.5 + leftClaw);
+
+
+                // Output the safe vales to the motor drives
                 telemetry.update();
 
             }

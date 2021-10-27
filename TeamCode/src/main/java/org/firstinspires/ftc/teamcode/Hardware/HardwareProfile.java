@@ -1,11 +1,8 @@
 package org.firstinspires.ftc.teamcode.Hardware;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-import java.util.Map;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
  * This is NOT an opmode.
@@ -31,6 +28,9 @@ public class HardwareProfile
     public DcMotor FrontLeftDrive;
     public DcMotor FrontRightDrive;
     public DcMotor Carousel;
+    public Servo ClawServoRight;
+    public Servo ClawServoLeft;
+
 
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
@@ -62,6 +62,12 @@ public class HardwareProfile
         FrontRightDrive = hwMap.get(DcMotor.class,"frontrightdrive");
         FrontRightDrive.setDirection(DcMotor.Direction.FORWARD);
         FrontRightDrive.setPower(0);
+
+        ClawServoRight = hwMap.get(Servo.class, "ClawServoRight");
+        ClawServoRight.setPosition(0.5);
+
+        ClawServoLeft = hwMap.get(Servo.class, "ClawServoLeft");
+        ClawServoLeft.setPosition(-0.5);
 
         Carousel  = hwMap.get(DcMotor.class, "Carousel");
         Carousel.setDirection(DcMotor.Direction.FORWARD);
