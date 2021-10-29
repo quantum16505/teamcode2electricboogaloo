@@ -12,11 +12,6 @@ public class EncoderAuto extends LinearOpMode {
     HardwareProfile robot = new HardwareProfile();
     private ElapsedTime runtime = new ElapsedTime();
 
-    static final double COUNTS_PER_MOTOR_REV = 384.5;    // eg: TETRIX Motor Encoder
-    static final double DRIVE_GEAR_REDUCTION = 2.0;     // This is < 1.0 if geared UP
-    static final double WHEEL_DIAMETER_INCHES = 4.0;     // For figuring circumference
-    static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
-            (WHEEL_DIAMETER_INCHES * 3.1415);
     static final double DRIVE_SPEED = 0.6;
     static final double TURN_SPEED = 0.5;
 
@@ -24,15 +19,29 @@ public class EncoderAuto extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         robot.init(hardwareMap);
-        robot.RearLeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.RearRightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.RearRightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.RearLeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        DcMotor[] motors = {robot.FrontLeftDrive, robot.FrontRightDrive, robot.RearRightDrive, robot.RearLeftDrive};
+        stopAndResetEncoder(motors);
+
+
+        runWithEncoder(robot.RearLeftDrive);
+        runWithEncoder(robot.FrontLeftDrive);
+        runWithEncoder(robot.RearRightDrive);
+        runWithEncoder(robot.FrontRightDrive);
 
         waitForStart();
-        encoderDrive(DRIVE_SPEED, 12.6, 12.6, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
+        encoderDrive(DRIVE_SPEED, 46.5, 46.5, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
+        encoderDrive(DRIVE_SPEED, 50, -50, 5.0);
     }
-
+    private void stopAndResetEncoder(DcMotor[] motors) {
+       int index;
+        for (index = 0; index < motors.length; index++) {
+            DcMotor motor = motors[index];
+            motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        }
+    }
+    private void runWithEncoder(DcMotor motor) {
+        motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
     public void encoderDrive(double speed,
                              double leftInches, double rightInches,
                              double timeoutS) {
@@ -43,19 +52,25 @@ public class EncoderAuto extends LinearOpMode {
         if (opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
-            newLeftTarget = robot.RearLeftDrive.getCurrentPosition() + (int) (leftInches * COUNTS_PER_INCH);
-            newRightTarget = robot.RearRightDrive.getCurrentPosition() + (int) (rightInches * COUNTS_PER_INCH);
+            newLeftTarget = robot.RearLeftDrive.getCurrentPosition() + (int) (leftInches * robot.COUNTS_PER_INCH);
+            newRightTarget = robot.RearRightDrive.getCurrentPosition() + (int) (rightInches * robot.COUNTS_PER_INCH);
             robot.RearLeftDrive.setTargetPosition(newLeftTarget);
             robot.RearRightDrive.setTargetPosition(newRightTarget);
+            robot.FrontRightDrive.setTargetPosition(newRightTarget);
+            robot.FrontLeftDrive.setTargetPosition(newLeftTarget);
+
 
             // Turn On RUN_TO_POSITION
             robot.RearLeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             robot.RearRightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
+            robot.FrontLeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.FrontRightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             // reset the timeout time and start motion.
             runtime.reset();
             robot.RearLeftDrive.setPower(Math.abs(speed));
             robot.RearRightDrive.setPower(Math.abs(speed));
+            robot.FrontRightDrive.setPower(Math.abs(speed));
+            robot.FrontLeftDrive.setPower(Math.abs(speed));
 
             // keep looping while we are still active, and there is time left, and both motors are running.
             // Note: We use (isBusy() && isBusy()) in the loop test, which means that when EITHER motor hits
@@ -78,11 +93,14 @@ public class EncoderAuto extends LinearOpMode {
             // Stop all motion;
             robot.RearLeftDrive.setPower(0);
             robot.RearRightDrive.setPower(0);
+            robot.FrontLeftDrive.setPower(0);
+            robot.FrontRightDrive.setPower(0);
 
             // Turn off RUN_TO_POSITION
             robot.RearLeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             robot.RearRightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
+            robot.FrontLeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.FrontRightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             //  sleep(250);   // optional pause after each move
         }
     }

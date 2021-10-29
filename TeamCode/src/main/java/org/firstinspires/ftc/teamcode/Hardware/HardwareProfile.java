@@ -31,6 +31,12 @@ public class HardwareProfile
     public Servo ClawServoRight;
     public Servo ClawServoLeft;
 
+    // Bot wheel and motor parameters
+    private double COUNTS_PER_MOTOR_REV = 223;
+    private double DRIVE_GEAR_REDUCTION = 2.0;
+    private double WHEEL_DIAMETER_INCHES = 5.0;
+    public double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
+            (WHEEL_DIAMETER_INCHES * 3.1415);
 
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
