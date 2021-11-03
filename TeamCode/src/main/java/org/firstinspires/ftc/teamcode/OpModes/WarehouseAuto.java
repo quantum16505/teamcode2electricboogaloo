@@ -7,8 +7,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Hardware.HardwareProfile;
 
-@Autonomous(name="EncoderAuto")
-public class EncoderAuto extends LinearOpMode {
+@Autonomous(name="WarehouseAuto")
+public class WarehouseAuto extends LinearOpMode {
     HardwareProfile robot = new HardwareProfile();
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -30,7 +30,6 @@ public class EncoderAuto extends LinearOpMode {
 
         waitForStart();
         encoderDrive(DRIVE_SPEED, 46.5, 46.5, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
-        encoderDrive(DRIVE_SPEED, 50, -50, 5.0);
     }
     private void stopAndResetEncoder(DcMotor[] motors) {
        int index;
