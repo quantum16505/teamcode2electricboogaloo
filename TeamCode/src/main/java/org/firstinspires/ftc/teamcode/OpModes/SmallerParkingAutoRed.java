@@ -10,8 +10,8 @@ import org.firstinspires.ftc.teamcode.OpModes.WarehouseAuto;
 
 
 
-@Autonomous(name = "SmallerParkingAuto")
-public class SmallerParkingAuto extends LinearOpMode {
+@Autonomous(name = "SmallerParkingAutoRed")
+public class SmallerParkingAutoRed extends LinearOpMode {
     HardwareProfile robot2 = new HardwareProfile();
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -33,7 +33,7 @@ public class SmallerParkingAuto extends LinearOpMode {
 
         waitForStart();
         encoderDrive(DRIVE_SPEED, 26.625, 26.625, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
-        encoderDrive(DRIVE_SPEED, 23, -23, 5.0);
+        encoderDrive(DRIVE_SPEED, -23, 23, 5.0);
         encoderDrive(DRIVE_SPEED, 33.44, 33.44, 5.0);
     }
 
@@ -109,3 +109,5 @@ public class SmallerParkingAuto extends LinearOpMode {
     }
 }
 
+
+//jimmy

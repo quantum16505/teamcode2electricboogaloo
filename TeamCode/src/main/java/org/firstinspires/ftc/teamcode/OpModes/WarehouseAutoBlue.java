@@ -7,13 +7,14 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Hardware.HardwareProfile;
 
-@Autonomous(name="WarehouseAuto")
-public class WarehouseAuto extends LinearOpMode {
+@Autonomous(name="WarehouseAutoBlue")
+public class WarehouseAutoBlue extends LinearOpMode {
     HardwareProfile robot = new HardwareProfile();
     private ElapsedTime runtime = new ElapsedTime();
 
-    static final double DRIVE_SPEED = 0.6;
+    static final double DRIVE_SPEED = 0.8;
     static final double TURN_SPEED = 0.5;
+
 
 
     @Override
@@ -28,8 +29,11 @@ public class WarehouseAuto extends LinearOpMode {
         runWithEncoder(robot.RearRightDrive);
         runWithEncoder(robot.FrontRightDrive);
 
+        //46.5
         waitForStart();
-        encoderDrive(DRIVE_SPEED, 46.5, 46.5, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
+        encoderDrive(DRIVE_SPEED, 5, -5, 5.0);
+        encoderDrive(DRIVE_SPEED, 53, 53, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
+        encoderDrive(DRIVE_SPEED, 200, -200, 18.0);
     }
     private void stopAndResetEncoder(DcMotor[] motors) {
        int index;
