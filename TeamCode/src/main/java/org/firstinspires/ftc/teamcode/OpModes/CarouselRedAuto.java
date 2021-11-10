@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.OpModes;
 
+import android.util.Log;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -7,31 +9,35 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.Hardware.HardwareProfile;
 
 
-@Autonomous(name = "SmallerParkingAutoBlue")
-public class SmallerParkingAutoBlue extends LinearOpMode {
+@Autonomous(name = "CarouselRedAuto")
+public class CarouselRedAuto extends LinearOpMode {
     HardwareProfile robot2 = new HardwareProfile();
     private ElapsedTime runtime = new ElapsedTime();
 
     static final double DRIVE_SPEED = 0.6;
     static final double TURN_SPEED = 0.5;
 
-
     @Override
     public void runOpMode() throws InterruptedException {
         robot2.init(hardwareMap);
-        DcMotor[] motors = {robot2.FrontLeftDrive, robot2.FrontRightDrive, robot2.RearRightDrive, robot2.RearLeftDrive};
+        DcMotor[] motors = {robot2.FrontLeftDrive, robot2.FrontRightDrive, robot2.RearRightDrive, robot2.RearLeftDrive,robot2.Carousel};
         stopAndResetEncoder(motors);
-
-
-        runWithEncoder(robot2.RearLeftDrive);
-        runWithEncoder(robot2.FrontLeftDrive);
-        runWithEncoder(robot2.RearRightDrive);
-        runWithEncoder(robot2.FrontRightDrive);
+        runWithEncoder(motors);
 
         waitForStart();
-        encoderDrive(DRIVE_SPEED, 26.625, 26.625, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
-        encoderDrive(DRIVE_SPEED, 23, -23, 5.0);
-        encoderDrive(DRIVE_SPEED, 33.44, 33.44, 5.0);
+        encoderDrive(DRIVE_SPEED, 37.5, 37.5, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
+        Log.d("CurrentPos", String.valueOf(robot2.Carousel.getCurrentPosition()));
+        int newCarouselTarget = robot2.Carousel.getCurrentPosition() + (int) (24 * robot2.CAROUSEL_COUNTS_PER_INCH);
+        Log.d("NewPos", String.valueOf(newCarouselTarget));
+        robot2.Carousel.setTargetPosition(-2000);
+        robot2.Carousel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot2.Carousel.setPower(0.1);
+        Log.d("CurrentPos", String.valueOf(robot2.Carousel.getCurrentPosition()));
+
+        while (opModeIsActive() && robot2.Carousel.isBusy() ) {
+
+
+        }
     }
 
     private void stopAndResetEncoder(DcMotor[] motors) {
@@ -41,9 +47,12 @@ public class SmallerParkingAutoBlue extends LinearOpMode {
             motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         }
     }
-
-    private void runWithEncoder(DcMotor motor) {
-        motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    private void runWithEncoder(DcMotor[] motors) {
+        int index;
+        for (index = 0; index < motors.length; index++){
+            DcMotor motor = motors[index];
+            motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }
     }
 
     public void encoderDrive(double speed,
@@ -106,3 +115,6 @@ public class SmallerParkingAutoBlue extends LinearOpMode {
     }
 }
 
+
+//jimmy
+//NAH

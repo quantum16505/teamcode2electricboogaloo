@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.Hardware.HardwareProfile;
 public class Competition_TeleOp extends LinearOpMode {
 
     HardwareProfile robot = new HardwareProfile();   // Use a Pushbots hardware
-
+    double arm;
     double left;
     double right;
     double drive;
@@ -25,8 +25,7 @@ public class Competition_TeleOp extends LinearOpMode {
     double SpeedMod_ClipMin = 0.5;
     double SpeedMod_ClipMax =1;
     double clawSpeed = 0.004;
-    double rightClaw = 0;
-    double leftClaw = 0;
+    double Claw = 0;
     boolean carouselOn = false;
     /**
      * This function is executed when this Op Mode is selected from the Driver Station.
@@ -48,6 +47,8 @@ public class Competition_TeleOp extends LinearOpMode {
 
                 drive = -gamepad1.left_stick_y;
                 turn  =  gamepad1.right_stick_x;
+
+               arm = gamepad2.left_stick_y;
 
                 if (gamepad1.dpad_up)
                 {
@@ -85,6 +86,7 @@ public class Competition_TeleOp extends LinearOpMode {
                 robot.RearRightDrive.setPower(SpeedMod * right);
                 robot.FrontLeftDrive.setPower(SpeedMod * left);
                 robot.FrontRightDrive.setPower(SpeedMod * right);
+                robot.ArmMotor.setPower(arm);
                 if (gamepad2.dpad_left) {
                     robot.Carousel.setPower(maxSpin);
                     carouselOn = true;
@@ -96,24 +98,18 @@ public class Competition_TeleOp extends LinearOpMode {
                 telemetry.addData("Power", SpeedMod);
 
                 if (gamepad2.left_bumper) {
-                    rightClaw -= clawSpeed;
-                    leftClaw += clawSpeed;
+                    Claw -= clawSpeed;
                 }
                 else if (gamepad2.right_bumper) {
-                    rightClaw += clawSpeed;
-                    leftClaw -= clawSpeed;
+                    Claw += clawSpeed;
                 }
-                rightClaw = Range.clip(rightClaw, -0.5, 0.5);
-                Log.d("", " clawOffset:" + String.valueOf(rightClaw));
-                robot.ClawServoRight.setPosition(0.5 + rightClaw);
+                Claw = Range.clip(Claw, -0.5, 0.5);
 
-                leftClaw = Range.clip(leftClaw, -0.5, 0.5);
-                Log.d("", " clawOffset:" + String.valueOf(leftClaw));
-                robot.ClawServoLeft.setPosition(0.5 + leftClaw);
-
+                robot.ClawServo.setPosition(0.5 + Claw);
 
                 // Output the safe vales to the motor drives
                 telemetry.update();
+                Log.d("CurrentPos", String.valueOf(robot.Carousel.getCurrentPosition()));
 
             }
 

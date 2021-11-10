@@ -55,8 +55,8 @@ public class WarehouseAutoRed extends LinearOpMode {
         if (opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
-            newLeftTarget = robot.RearLeftDrive.getCurrentPosition() + (int) (leftInches * robot.COUNTS_PER_INCH);
-            newRightTarget = robot.RearRightDrive.getCurrentPosition() + (int) (rightInches * robot.COUNTS_PER_INCH);
+            newLeftTarget = robot.RearLeftDrive.getCurrentPosition() + (int) (leftInches * robot.WHEEL_COUNTS_PER_INCH);
+            newRightTarget = robot.RearRightDrive.getCurrentPosition() + (int) (rightInches * robot.WHEEL_COUNTS_PER_INCH);
             robot.RearLeftDrive.setTargetPosition(newLeftTarget);
             robot.RearRightDrive.setTargetPosition(newRightTarget);
             robot.FrontRightDrive.setTargetPosition(newRightTarget);

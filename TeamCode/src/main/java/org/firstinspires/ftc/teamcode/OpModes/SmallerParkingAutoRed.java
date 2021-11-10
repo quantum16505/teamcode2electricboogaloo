@@ -2,12 +2,9 @@ package org.firstinspires.ftc.teamcode.OpModes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.robocol.TelemetryMessage;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.Hardware.HardwareProfile;
-import org.firstinspires.ftc.teamcode.OpModes.WarehouseAuto;
-
 
 
 @Autonomous(name = "SmallerParkingAutoRed")
@@ -59,8 +56,8 @@ public class SmallerParkingAutoRed extends LinearOpMode {
         if (opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
-            newLeftTarget = robot2.RearLeftDrive.getCurrentPosition() + (int) (leftInches * robot2.COUNTS_PER_INCH);
-            newRightTarget = robot2.RearRightDrive.getCurrentPosition() + (int) (rightInches * robot2.COUNTS_PER_INCH);
+            newLeftTarget = robot2.RearLeftDrive.getCurrentPosition() + (int) (leftInches * robot2.WHEEL_COUNTS_PER_INCH);
+            newRightTarget = robot2.RearRightDrive.getCurrentPosition() + (int) (rightInches * robot2.WHEEL_COUNTS_PER_INCH);
             robot2.RearLeftDrive.setTargetPosition(newLeftTarget);
             robot2.RearRightDrive.setTargetPosition(newRightTarget);
             robot2.FrontRightDrive.setTargetPosition(newRightTarget);

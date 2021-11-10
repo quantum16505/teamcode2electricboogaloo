@@ -28,14 +28,18 @@ public class HardwareProfile
     public DcMotor FrontLeftDrive;
     public DcMotor FrontRightDrive;
     public DcMotor Carousel;
-    public Servo ClawServoRight;
+    public DcMotor ArmMotor;
+    public Servo ClawServo;
     public Servo ClawServoLeft;
 
     // Bot wheel and motor parameters
     private double COUNTS_PER_MOTOR_REV = 223;
+    private double COUNTS_PER_CAROUSEL_REV = 28;
     private double DRIVE_GEAR_REDUCTION = 2.0;
     private double WHEEL_DIAMETER_INCHES = 5.0;
-    public double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
+    private double CAROUSEL_WHEEL_DIAMETER = 2.75;
+    public double CAROUSEL_COUNTS_PER_INCH = COUNTS_PER_CAROUSEL_REV / (CAROUSEL_WHEEL_DIAMETER * 3.1415);
+    public double WHEEL_COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
 
     /* local OpMode members. */
@@ -52,6 +56,9 @@ public class HardwareProfile
         hwMap = ahwMap;
 
         // Define and Initialize Motors
+        ArmMotor = hwMap.get(DcMotor.class, "armmotor");
+        ArmMotor.setDirection(DcMotor.Direction.FORWARD);
+        ArmMotor.setPower(0);
 
         RearRightDrive = hwMap.get(DcMotor.class,"rearrightdrive");
         RearRightDrive.setDirection(DcMotor.Direction.FORWARD);
@@ -69,11 +76,9 @@ public class HardwareProfile
         FrontRightDrive.setDirection(DcMotor.Direction.FORWARD);
         FrontRightDrive.setPower(0);
 
-        ClawServoRight = hwMap.get(Servo.class, "ClawServoRight");
-        ClawServoRight.setPosition(0.5);
+        ClawServo = hwMap.get(Servo.class, "ClawServo");
+        ClawServo.setPosition(0.5);
 
-        ClawServoLeft = hwMap.get(Servo.class, "ClawServoLeft");
-        ClawServoLeft.setPosition(-0.5);
 
         Carousel  = hwMap.get(DcMotor.class, "Carousel");
         Carousel.setDirection(DcMotor.Direction.FORWARD);
