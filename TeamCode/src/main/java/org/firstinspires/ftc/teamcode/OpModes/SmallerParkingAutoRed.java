@@ -100,11 +100,15 @@ public class SmallerParkingAutoRed extends LinearOpMode {
             robot2.RearRightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             robot2.FrontLeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             robot2.FrontRightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+
+            robot2.ArmMotor.
             //  sleep(250);   // optional pause after each move
 
         }
     }
 }
+
 
 
 //jimmy

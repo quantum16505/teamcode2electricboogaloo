@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Hardware;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -28,7 +29,7 @@ public class HardwareProfile
     public DcMotor FrontLeftDrive;
     public DcMotor FrontRightDrive;
     public DcMotor Carousel;
-    public DcMotor ArmMotor;
+    public DcMotorEx ArmMotor;
     public Servo ClawServo;
     public Servo ClawServoLeft;
 
@@ -56,8 +57,8 @@ public class HardwareProfile
         hwMap = ahwMap;
 
         // Define and Initialize Motors
-        ArmMotor = hwMap.get(DcMotor.class, "armmotor");
-        ArmMotor.setDirection(DcMotor.Direction.FORWARD);
+        ArmMotor = hwMap.get(DcMotorEx.class, "armmotor");
+        ArmMotor.setDirection(DcMotorEx.Direction.FORWARD);
         ArmMotor.setPower(0);
 
         RearRightDrive = hwMap.get(DcMotor.class,"rearrightdrive");

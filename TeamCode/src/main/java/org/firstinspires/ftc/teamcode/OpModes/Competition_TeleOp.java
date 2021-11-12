@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.Hardware.HardwareProfile;
@@ -13,13 +14,14 @@ public class Competition_TeleOp extends LinearOpMode {
 
     HardwareProfile robot = new HardwareProfile();   // Use a Pushbots hardware
     double arm;
+    double ArmSpeedMod = 0.2;
     double left;
     double right;
     double drive;
     double turn;
     double max;
-    double carouselSpin;
-    double maxSpin = 0.1;
+//    double carouselSpin;
+    double maxSpin = 0.2;
     int Counter = 0;
     double SpeedMod = 0.75;
     double SpeedMod_ClipMin = 0.5;
@@ -33,10 +35,11 @@ public class Competition_TeleOp extends LinearOpMode {
     @Override
     public void runOpMode() {
         robot.init(hardwareMap);
-//        robot.RearLeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//        robot.RearRightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//        robot.RearLeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//        robot.RearRightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//      robot.RearLeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//      robot.RearRightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//      robot.RearLeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//      robot.RearRightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.ArmMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
 
 
@@ -48,7 +51,7 @@ public class Competition_TeleOp extends LinearOpMode {
                 drive = -gamepad1.left_stick_y;
                 turn  =  gamepad1.right_stick_x;
 
-               arm = gamepad2.left_stick_y;
+                arm = gamepad2.left_stick_y;
 
                 if (gamepad1.dpad_up)
                 {
@@ -86,7 +89,7 @@ public class Competition_TeleOp extends LinearOpMode {
                 robot.RearRightDrive.setPower(SpeedMod * right);
                 robot.FrontLeftDrive.setPower(SpeedMod * left);
                 robot.FrontRightDrive.setPower(SpeedMod * right);
-                robot.ArmMotor.setPower(arm);
+                robot.ArmMotor.setPower(arm * ArmSpeedMod);
                 if (gamepad2.dpad_left) {
                     robot.Carousel.setPower(maxSpin);
                     carouselOn = true;
@@ -110,9 +113,19 @@ public class Competition_TeleOp extends LinearOpMode {
                 // Output the safe vales to the motor drives
                 telemetry.update();
                 Log.d("CurrentPos", String.valueOf(robot.Carousel.getCurrentPosition()));
-
+                Log.d("Arm" , String.valueOf(robot.ArmMotor.getCurrentPosition()));
             }
 
         }
     }
 }
+//Jimothy
+//Jimothy
+//Jimothy
+//Jimothy
+//Jimothy
+//Jimothy
+//Jimothy
+//Jimothy
+//Jimothy
+//Jimothy
