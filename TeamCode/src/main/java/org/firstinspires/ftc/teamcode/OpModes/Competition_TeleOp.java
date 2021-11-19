@@ -20,25 +20,18 @@ public class Competition_TeleOp extends LinearOpMode {
     double drive;
     double turn;
     double max;
-//    double carouselSpin;
     double maxSpin = 0.2;
-    int Counter = 0;
     double SpeedMod = 0.75;
     double SpeedMod_ClipMin = 0.5;
     double SpeedMod_ClipMax =1;
     double clawSpeed = 0.004;
     double Claw = 0;
-    boolean carouselOn = false;
     /**
      * This function is executed when this Op Mode is selected from the Driver Station.
      */
     @Override
     public void runOpMode() {
         robot.init(hardwareMap);
-//      robot.RearLeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//      robot.RearRightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//      robot.RearLeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//      robot.RearRightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.ArmMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
 
@@ -91,12 +84,13 @@ public class Competition_TeleOp extends LinearOpMode {
                 robot.FrontRightDrive.setPower(SpeedMod * right);
                 robot.ArmMotor.setPower(arm * ArmSpeedMod);
                 if (gamepad2.dpad_left) {
-                    robot.Carousel.setPower(maxSpin);
-                    carouselOn = true;
+                    robot.Carousel.setPower(-maxSpin);
                 }
-                else if (gamepad2.dpad_left == false) {
+                else if (gamepad2.dpad_right) {
+                    robot.Carousel.setPower(maxSpin);
+                }
+                else {
                     robot.Carousel.setPower(0);
-                    carouselOn = false;
                 }
                 telemetry.addData("Power", SpeedMod);
 

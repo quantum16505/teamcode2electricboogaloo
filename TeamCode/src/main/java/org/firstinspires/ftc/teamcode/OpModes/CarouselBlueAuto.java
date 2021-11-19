@@ -9,8 +9,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.Hardware.HardwareProfile;
 
 
-@Autonomous(name = "CarouselRedAuto")
-public class CarouselRedAuto extends LinearOpMode {
+@Autonomous(name = "CarouselBlueAuto")
+public class CarouselBlueAuto extends LinearOpMode {
     HardwareProfile robot2 = new HardwareProfile();
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -29,9 +29,9 @@ public class CarouselRedAuto extends LinearOpMode {
         Log.d("CurrentPos", String.valueOf(robot2.Carousel.getCurrentPosition()));
         int newCarouselTarget = robot2.Carousel.getCurrentPosition() + (int) (24 * robot2.CAROUSEL_COUNTS_PER_INCH);
         Log.d("NewPos", String.valueOf(newCarouselTarget));
-        robot2.Carousel.setTargetPosition(-2000);
+        robot2.Carousel.setTargetPosition(2000);
         robot2.Carousel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot2.Carousel.setPower(0.175987);
+        robot2.Carousel.setPower(-0.175987);
         Log.d("CurrentPos", String.valueOf(robot2.Carousel.getCurrentPosition()));
 
         while (opModeIsActive() && robot2.Carousel.isBusy() ) {
@@ -118,3 +118,4 @@ public class CarouselRedAuto extends LinearOpMode {
 
 //jimmy
 //NAH
+
