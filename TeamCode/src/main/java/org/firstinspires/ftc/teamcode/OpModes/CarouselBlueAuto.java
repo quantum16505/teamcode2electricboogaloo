@@ -14,7 +14,7 @@ public class CarouselBlueAuto extends LinearOpMode {
     HardwareProfile robot2 = new HardwareProfile();
     private ElapsedTime runtime = new ElapsedTime();
 
-    static final double DRIVE_SPEED = 0.6;
+    static final double DRIVE_SPEED = 0.55;
     static final double TURN_SPEED = 0.5;
 
     @Override
@@ -26,12 +26,13 @@ public class CarouselBlueAuto extends LinearOpMode {
 
         waitForStart();
         encoderDrive(DRIVE_SPEED, 37.5, 37.5, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
+        encoderDrive(DRIVE_SPEED, 4, -4, 2.2);
         Log.d("CurrentPos", String.valueOf(robot2.Carousel.getCurrentPosition()));
         int newCarouselTarget = robot2.Carousel.getCurrentPosition() + (int) (24 * robot2.CAROUSEL_COUNTS_PER_INCH);
         Log.d("NewPos", String.valueOf(newCarouselTarget));
         robot2.Carousel.setTargetPosition(2000);
         robot2.Carousel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot2.Carousel.setPower(-0.175987);
+        robot2.Carousel.setPower(-0.1212657895);
         Log.d("CurrentPos", String.valueOf(robot2.Carousel.getCurrentPosition()));
 
         while (opModeIsActive() && robot2.Carousel.isBusy() ) {

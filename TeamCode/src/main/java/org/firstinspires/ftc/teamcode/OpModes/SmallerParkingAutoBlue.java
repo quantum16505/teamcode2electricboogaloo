@@ -28,9 +28,11 @@ public class SmallerParkingAutoBlue extends LinearOpMode {
         runWithEncoder(robot2.RearRightDrive);
         runWithEncoder(robot2.FrontRightDrive);
 
+        //23
+        //26.625
         waitForStart();
-        encoderDrive(DRIVE_SPEED, 26.625, 26.625, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
-        encoderDrive(DRIVE_SPEED, 23, -23, 5.0);
+        encoderDrive(DRIVE_SPEED, 23.625, 23.625, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
+        encoderDrive(DRIVE_SPEED, 45, -45, 5.0);
         encoderDrive(DRIVE_SPEED, 33.44, 33.44, 5.0);
     }
 
