@@ -9,11 +9,16 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.Hardware.HardwareProfile;
 
 
-@Autonomous(name = "CarouselBlueParkAuto")
-public class CarouselBlueParkAuto extends LinearOpMode {
+@Autonomous(name = "CarouselRedParkAuto")
+public class CarouselRedParkAuto extends LinearOpMode {
     HardwareProfile robot2 = new HardwareProfile();
     private ElapsedTime runtime = new ElapsedTime();
 
+
+
+
+    boolean Step1 = false;
+    boolean Step2 = false;
     static final double DRIVE_SPEED = 0.55;
     static final double TURN_SPEED = 0.5;
 
@@ -24,23 +29,54 @@ public class CarouselBlueParkAuto extends LinearOpMode {
         stopAndResetEncoder(motors);
         runWithEncoder(motors);
 
-        waitForStart();
-        encoderDrive(DRIVE_SPEED, 37.5, 37.5, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
-        encoderDrive(DRIVE_SPEED, 4, -4, 2.2);
+        waitForStart();encoderDrive(DRIVE_SPEED, 52, -52, 3.2); //turn 90 degrees right
+
+        encoderDrive(DRIVE_SPEED, 7, -7, 2.2);
+        encoderDrive(DRIVE_SPEED, 41, 41, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout //was 37.5
+
+
         Log.d("CurrentPos", String.valueOf(robot2.Carousel.getCurrentPosition()));
         int newCarouselTarget = robot2.Carousel.getCurrentPosition() + (int) (24 * robot2.CAROUSEL_COUNTS_PER_INCH);
         Log.d("NewPos", String.valueOf(newCarouselTarget));
-        robot2.Carousel.setTargetPosition(2000);
+        robot2.Carousel.setTargetPosition(-6000);
         robot2.Carousel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot2.Carousel.setPower(-0.1212657895);
+        robot2.Carousel.setPower(-0.8);
         Log.d("CurrentPos", String.valueOf(robot2.Carousel.getCurrentPosition()));
-
-        while (opModeIsActive() && robot2.Carousel.isBusy() ) {
+        ;
+        if (robot2.Carousel.isBusy()) {
+            Step1 = false;
         }
-        encoderDrive(DRIVE_SPEED, -45, 45, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
-        encoderDrive(DRIVE_SPEED, 27.5, 27.5, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
-        encoderDrive(DRIVE_SPEED, -45, 45, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
-        encoderDrive(DRIVE_SPEED, 27.5, 27.5, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
+        else {
+            Step1 = true;
+        }
+
+        if (Step1) {
+            encoderDrive(DRIVE_SPEED, -17, -17, 2.2); //reverse
+
+        }
+
+        if (robot2.FrontRightDrive.isBusy()) {
+
+        }
+
+        else {
+            Step1 = false;
+            Step2 = true;
+        }
+
+        if (Step2 && runtime.time() > 20)
+        {
+            encoderDrive(DRIVE_SPEED, 52, -52, 3.2); //turn 90 degrees right
+        }
+
+
+//        while (step2 = true) {
+//            encoderDrive(DRIVE_SPEED, 11.25, 11.25, 2.2); //drive forward
+//            encoderDrive(DRIVE_SPEED, -45, 45, 3.2); //turn 90 degrees left
+//            step2 = false;
+//        }
+
+//        encoderDrive(DRIVE_SPEED, 24, 24, 3.2); //drive forward 1 block
 
 
     }
