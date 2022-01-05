@@ -1,7 +1,9 @@
 package org.firstinspires.ftc.teamcode.Hardware;
 
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -29,9 +31,11 @@ public class HardwareProfile
     public DcMotor FrontLeftDrive;
     public DcMotor FrontRightDrive;
     public DcMotor Carousel;
-    public DcMotorEx ArmMotor;
-    public Servo ClawServo;
-    public Servo ClawServoLeft;
+    public CRServo ArmServo;
+    public Servo ClawLeft;
+    public Servo ClawRight;
+//    public Servo ClawServo;
+//    public Servo ClawServoLeft;
 
     // Bot wheel and motor parameters
     private double COUNTS_PER_MOTOR_REV = 223;
@@ -57,12 +61,9 @@ public class HardwareProfile
         hwMap = ahwMap;
 
         // Define and Initialize Motors
-        ArmMotor = hwMap.get(DcMotorEx.class, "armmotor");
-        ArmMotor.setDirection(DcMotorEx.Direction.FORWARD);
-        ArmMotor.setPower(0);
 
         RearRightDrive = hwMap.get(DcMotor.class,"rearrightdrive");
-        RearRightDrive.setDirection(DcMotor.Direction.FORWARD);
+        RearRightDrive.setDirection(DcMotor.Direction.REVERSE);
         RearRightDrive.setPower(0);
 
         RearLeftDrive = hwMap.get(DcMotor.class,"rearleftdrive");
@@ -74,16 +75,25 @@ public class HardwareProfile
         FrontLeftDrive.setPower(0);
 
         FrontRightDrive = hwMap.get(DcMotor.class,"frontrightdrive");
-        FrontRightDrive.setDirection(DcMotor.Direction.FORWARD);
+        FrontRightDrive.setDirection(DcMotor.Direction.REVERSE);
         FrontRightDrive.setPower(0);
-
-        ClawServo = hwMap.get(Servo.class, "ClawServo");
-        ClawServo.setPosition(0.5);
-
 
         Carousel  = hwMap.get(DcMotor.class, "Carousel");
         Carousel.setDirection(DcMotor.Direction.FORWARD);
         Carousel.setPower(0);
 
+        // define servos
+
+
+
+       ArmServo = hwMap.get(CRServo.class, "armservo");
+
+
+        ClawLeft = hwMap.get(Servo.class, "leftclaw");
+        ClawLeft.setPosition(0.5);
+
+        ClawRight = hwMap.get(Servo.class, "rightclaw");
+        ClawRight.setPosition(0.5);
     }
+
 }

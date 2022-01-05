@@ -29,8 +29,7 @@ public class CarouselRedParkAuto extends LinearOpMode {
         stopAndResetEncoder(motors);
         runWithEncoder(motors);
 
-        waitForStart();encoderDrive(DRIVE_SPEED, 52, -52, 3.2); //turn 90 degrees right
-
+        waitForStart();
         encoderDrive(DRIVE_SPEED, 7, -7, 2.2);
         encoderDrive(DRIVE_SPEED, 41, 41, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout //was 37.5
 
@@ -43,40 +42,18 @@ public class CarouselRedParkAuto extends LinearOpMode {
         robot2.Carousel.setPower(-0.8);
         Log.d("CurrentPos", String.valueOf(robot2.Carousel.getCurrentPosition()));
         ;
-        if (robot2.Carousel.isBusy()) {
-            Step1 = false;
+        while (robot2.Carousel.isBusy()) {
         }
-        else {
-            Step1 = true;
-        }
+        encoderDrive(DRIVE_SPEED, -17, -17, 10); //reverse
+        encoderDrive(DRIVE_SPEED, 52, -52, 10); //turn 90 degrees right
 
-        if (Step1) {
-            encoderDrive(DRIVE_SPEED, -17, -17, 2.2); //reverse
-
-        }
-
-        if (robot2.FrontRightDrive.isBusy()) {
-
-        }
-
-        else {
-            Step1 = false;
-            Step2 = true;
-        }
-
-        if (Step2 && runtime.time() > 20)
-        {
-            encoderDrive(DRIVE_SPEED, 52, -52, 3.2); //turn 90 degrees right
-        }
+        encoderDrive(DRIVE_SPEED, 11.25, 11.25, 10); //drive forward
+        encoderDrive(DRIVE_SPEED, -42, 42, 10); //turn 90 degrees left
+        encoderDrive(DRIVE_SPEED, 24, 24, 10); //drive forward 1 block
 
 
-//        while (step2 = true) {
-//            encoderDrive(DRIVE_SPEED, 11.25, 11.25, 2.2); //drive forward
-//            encoderDrive(DRIVE_SPEED, -45, 45, 3.2); //turn 90 degrees left
-//            step2 = false;
-//        }
 
-//        encoderDrive(DRIVE_SPEED, 24, 24, 3.2); //drive forward 1 block
+
 
 
     }
