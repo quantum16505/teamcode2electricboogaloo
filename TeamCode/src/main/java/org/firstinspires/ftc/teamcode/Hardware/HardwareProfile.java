@@ -23,8 +23,7 @@ import com.qualcomm.robotcore.hardware.Servo;
  * Servo channel:  Servo to open left claw:  "left_hand"
  * Servo channel:  Servo to open right claw: "right_hand"
  */
-public class HardwareProfile
-{
+public class HardwareProfile {
     /* Public OpMode members. */
     public DcMotor RearRightDrive;
     public DcMotor RearLeftDrive;
@@ -32,26 +31,24 @@ public class HardwareProfile
     public DcMotor FrontRightDrive;
     public DcMotor Carousel;
     public CRServo ArmServo;
-    public Servo ClawLeft;
-    public Servo ClawRight;
-//    public Servo ClawServo;
-//    public Servo ClawServoLeft;
+    public CRServo IntakeLeft;
+    public CRServo IntakeRight;
 
     // Bot wheel and motor parameters
-    private double COUNTS_PER_MOTOR_REV = 223;
+    private double COUNTS_PER_MOTOR_REV = 384.5;
     private double COUNTS_PER_CAROUSEL_REV = 28;
     private double DRIVE_GEAR_REDUCTION = 2.0;
-    private double WHEEL_DIAMETER_INCHES = 5.0;
+    private double WHEEL_DIAMETER_INCHES = 3.779;
     private double CAROUSEL_WHEEL_DIAMETER = 2.75;
     public double CAROUSEL_COUNTS_PER_INCH = COUNTS_PER_CAROUSEL_REV / (CAROUSEL_WHEEL_DIAMETER * 3.1415);
     public double WHEEL_COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
 
     /* local OpMode members. */
-    HardwareMap hwMap           =  null;
+    HardwareMap hwMap = null;
 
     /* Constructor */
-    public HardwareProfile(){
+    public HardwareProfile() {
 
     }
 
@@ -62,38 +59,33 @@ public class HardwareProfile
 
         // Define and Initialize Motors
 
-        RearRightDrive = hwMap.get(DcMotor.class,"rearrightdrive");
+        RearRightDrive = hwMap.get(DcMotor.class, "rearrightdrive");
         RearRightDrive.setDirection(DcMotor.Direction.REVERSE);
         RearRightDrive.setPower(0);
 
-        RearLeftDrive = hwMap.get(DcMotor.class,"rearleftdrive");
+        RearLeftDrive = hwMap.get(DcMotor.class, "rearleftdrive");
         RearLeftDrive.setDirection(DcMotor.Direction.REVERSE);
         RearLeftDrive.setPower(0);
 
-        FrontLeftDrive = hwMap.get(DcMotor.class,"frontleftdrive");
+        FrontLeftDrive = hwMap.get(DcMotor.class, "frontleftdrive");
         FrontLeftDrive.setDirection(DcMotor.Direction.REVERSE);
         FrontLeftDrive.setPower(0);
 
-        FrontRightDrive = hwMap.get(DcMotor.class,"frontrightdrive");
+        FrontRightDrive = hwMap.get(DcMotor.class, "frontrightdrive");
         FrontRightDrive.setDirection(DcMotor.Direction.REVERSE);
         FrontRightDrive.setPower(0);
 
-        Carousel  = hwMap.get(DcMotor.class, "Carousel");
+        Carousel = hwMap.get(DcMotor.class, "Carousel");
         Carousel.setDirection(DcMotor.Direction.FORWARD);
         Carousel.setPower(0);
 
         // define servos
 
 
+        ArmServo = hwMap.get(CRServo.class, "armservo");
+        IntakeLeft = hwMap.get(CRServo.class, "intakeleft");
+        IntakeRight = hwMap.get(CRServo.class, "intakeright");
 
-       ArmServo = hwMap.get(CRServo.class, "armservo");
 
-
-        ClawLeft = hwMap.get(Servo.class, "leftclaw");
-        ClawLeft.setPosition(0.5);
-
-        ClawRight = hwMap.get(Servo.class, "rightclaw");
-        ClawRight.setPosition(0.5);
     }
-
 }

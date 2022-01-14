@@ -9,21 +9,15 @@ import org.firstinspires.ftc.teamcode.Hardware.HardwareProfile;
 public class Mechanum_TeleOp extends LinearOpMode {
 
     HardwareProfile robot = new HardwareProfile();   // Use a Pushbots hardware
-    double arm;
-    double ArmSpeedMod = 0.4;
-    double leftTurn;
-    double rightTurn;
-    double strafeLeft;
-    double strafeRight;
-    double drive;
-    double turn;
+    double rx;
+    double y;
+    double x;
     double max;
-    double maxSpin = 0.35;
+    double maxSpin = 0.7;
     double SpeedMod = 0.75;
     double SpeedMod_ClipMin = 0.5;
     double SpeedMod_ClipMax =1;
-    double clawSpeed = 0.004;
-    double Claw = 0;
+
     /**
      * This function is executed when this Op Mode is selected from the Driver Station.
      */
@@ -34,29 +28,39 @@ public class Mechanum_TeleOp extends LinearOpMode {
         waitForStart();
         if (opModeIsActive()) {
             while (opModeIsActive()) {
-                arm = gamepad2.left_stick_y;
-
                 DriveControls();
 
                 CarouselControls();
 
                 ArmControls();
 
+                IntakeControls();
+
                 telemetry.update();
             }
 
         }
     }
-
-    private void ArmControls() {
-        if (gamepad2.left_stick_y > 0.5) {
-            robot.ArmServo.setPower(1);
+    private void IntakeControls() {
+        if (gamepad2.left_bumper) {
+            robot.IntakeLeft.setPower(1);
+            robot.IntakeRight.setPower(-1);
         }
-        if (gamepad2.left_stick_y < -0.5) {
-            robot.ArmServo.setPower(-1);
+        else if (gamepad2.right_bumper) {
+            robot.IntakeLeft.setPower(-1);
+            robot.IntakeRight.setPower(1);
+        }
+        else {
+            robot.IntakeLeft.setPower(0);
+            robot.IntakeRight.setPower(0);
+        }
+    }
+    private void ArmControls() {
+        telemetry.addData("ArmStick" , gamepad1.left_stick_y );
+        if(gamepad2.left_stick_y > 0.05 || gamepad2.left_stick_y < 0.05)   {
+            robot.ArmServo.setPower(gamepad2.left_stick_y);
         } else {
             robot.ArmServo.setPower(0);
-
         }
     }
 
@@ -73,10 +77,9 @@ public class Mechanum_TeleOp extends LinearOpMode {
     }
 
     private void DriveControls() {
-        drive = -gamepad1.left_stick_y;
-        turn  =  gamepad1.right_stick_x;
-        strafeLeft = -gamepad1.left_stick_x;
-        strafeRight = gamepad1.left_stick_x;
+        y = -gamepad1.left_stick_y;
+        x =  gamepad1.right_stick_x * 1.1;
+        rx = gamepad1.left_stick_x;
         if (gamepad1.dpad_up)
         {
             SpeedMod = SpeedMod + 0.0001;
@@ -89,18 +92,6 @@ public class Mechanum_TeleOp extends LinearOpMode {
 
         }
 
-        // Combine drive and turn for blended motion.
-        leftTurn  = drive + turn;
-        rightTurn = drive - turn;
-
-        // Normalize the values so neither exceed +/- 1.0
-        max = Math.max(Math.abs(leftTurn), Math.abs(rightTurn) ) ;
-        if (max > 1.0)
-        {
-            leftTurn /= max;
-            rightTurn /= max;
-        }
-
         if (SpeedMod > SpeedMod_ClipMax)
         {
             SpeedMod = SpeedMod_ClipMax;
@@ -109,21 +100,14 @@ public class Mechanum_TeleOp extends LinearOpMode {
         {
             SpeedMod = SpeedMod_ClipMin;
         }
-        robot.FrontLeftDrive.setPower(SpeedMod * (drive + turn + strafeLeft));
-        robot.RearLeftDrive.setPower(SpeedMod * (drive + (turn + strafeRight)));
-        robot.FrontRightDrive.setPower(SpeedMod * (-drive + (turn + strafeRight)));
-        robot.RearRightDrive.setPower(SpeedMod * (-drive + (turn + strafeLeft)));
+        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx),1);
+        robot.FrontLeftDrive.setPower((y + x + rx) / denominator);
+        robot.RearLeftDrive.setPower((y - rx + x) / denominator);
+        robot.FrontRightDrive.setPower((y - rx - x) / denominator);
+        robot.RearRightDrive.setPower( (y + rx - x) / denominator);
+
         telemetry.addData("Power", SpeedMod);
     }
 }
-//Jimothy
-//Jimothy
-//Jimothy
-//Jimothy
-//Jimothy
-//Jimothy
-//Jimothy
-//Jimothy
-//Jimothy
-//Jimothy
+//No Jimothy
 //Lee

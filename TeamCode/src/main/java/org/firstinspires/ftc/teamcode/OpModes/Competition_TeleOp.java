@@ -1,14 +1,12 @@
 package org.firstinspires.ftc.teamcode.OpModes;
 
 import android.util.Log;
-import com.qualcomm.robotcore.hardware.CRServo;
+
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.ServoController;
 import com.qualcomm.robotcore.util.Range;
-import com.qualcomm.robotcore.hardware.HardwareMap;
+
 import org.firstinspires.ftc.teamcode.Hardware.HardwareProfile;
 
 @TeleOp(name = "Competition_TeleOp", group = "")
@@ -67,18 +65,18 @@ public class Competition_TeleOp extends LinearOpMode {
                 Claw = Range.clip(Claw, -0.5, 0.5);
 
                 if (gamepad2.right_bumper) {
-                    robot.ClawLeft.setDirection(Servo.Direction.FORWARD);
-                    robot.ClawRight.setDirection(Servo.Direction.REVERSE);
-                    robot.ClawRight.setPosition(0.5 + Claw);
-                    robot.ClawLeft.setPosition(0.5 + Claw);
+//                    robot.IntakeLeft.setDirection(Servo.Direction.FORWARD);
+//                    robot.IntakeRight.setDirection(Servo.Direction.REVERSE);
+//                    robot.IntakeRight.setPosition(0.5 + Claw);
+//                    robot.IntakeLeft.setPosition(0.5 + Claw);
                 }
 
-                if (gamepad2.left_bumper) {
-                    robot.ClawLeft.setDirection(Servo.Direction.REVERSE);
-                    robot.ClawRight.setDirection(Servo.Direction.FORWARD);
-                    robot.ClawRight.setPosition(0.5 + Claw);
-                    robot.ClawLeft.setPosition(0.5 + Claw);
-                }
+//                if (gamepad2.left_bumper) {
+//                    robot.IntakeLeft.setDirection(Servo.Direction.REVERSE);
+//                    robot.IntakeRight.setDirection(Servo.Direction.FORWARD);
+//                    robot.IntakeRight.setPosition(0.5 + Claw);
+//                    robot.IntakeLeft.setPosition(0.5 + Claw);
+//                }
 
                     // Combine drive and turn for blended motion.
                     left = drive + turn;
