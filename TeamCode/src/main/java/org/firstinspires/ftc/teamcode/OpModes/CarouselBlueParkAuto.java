@@ -9,8 +9,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.Hardware.HardwareProfile;
 
 
-@Autonomous(name = "CarouselRedParkAuto")
-public class CarouselRedParkAuto extends LinearOpMode {
+@Autonomous(name = "CarouselBlueParkAuto")
+public class CarouselBlueParkAuto extends LinearOpMode {
     HardwareProfile robot2 = new HardwareProfile();
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -30,15 +30,18 @@ public class CarouselRedParkAuto extends LinearOpMode {
         runWithEncoder(motors);
 
         waitForStart();
-        encoderDrive(DRIVE_SPEED, 1.75, -1.75, 10);
-        encoderDrive(DRIVE_SPEED, 23, 23, 10.0);  // S1: Forward 47 Inches with 5 Sec timeout //was 37.5
 
-
+        encoderDrive(DRIVE_SPEED, 12, 12, 10);
+        encoderDrive(DRIVE_SPEED, 17, -17 , 13333333);  // S1: Forward 47 Inches with 5 Sec timeout //was 37.5
+        encoderDrive(DRIVE_SPEED, 20, 20 , 13333333);
+        encoderDrive(DRIVE_SPEED, 13, -13 , 13333333);
+        encoderDrive(DRIVE_SPEED, 13.5, 13.5, 10);
 
         Log.d("CurrentPos", String.valueOf(robot2.Carousel.getCurrentPosition()));
-        int newCarouselTarget = robot2.Carousel.getCurrentPosition() + (int) (220 *  robot2.CAROUSEL_COUNTS_PER_INCH);
+
+        int newCarouselTarget = robot2.Carousel.getCurrentPosition() + (int) (250 *  robot2.CAROUSEL_COUNTS_PER_INCH);
         Log.d("NewPos", String.valueOf(newCarouselTarget));
-        robot2.Carousel.setTargetPosition(newCarouselTarget * -1);
+        robot2.Carousel.setTargetPosition(newCarouselTarget);
         robot2.Carousel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         robot2.Carousel.setPower(0.8);
         Log.d("CurrentPos", String.valueOf(robot2.Carousel.getCurrentPosition()));
@@ -46,11 +49,14 @@ public class CarouselRedParkAuto extends LinearOpMode {
         while (robot2.Carousel.isBusy()) {
         }
 
-        encoderDrive(DRIVE_SPEED, 14.45, -14.45, 140); //turn 90 degrees right
+        encoderDrive(DRIVE_SPEED, -26, -26, 10);
+        encoderDrive(DRIVE_SPEED, -12, 12, 10);
+        encoderDrive(DRIVE_SPEED, 14.5, 14.5, 10);
+//
+//        encoderDrive(DRIVE_SPEED, -14.45, 14.45, 140); //turn 90 degrees right
+//
+//        encoderDrive(DRIVE_SPEED, 22.345, 22.345, 10); //drive forward
 
-        encoderDrive(DRIVE_SPEED, 22.345, 22.345, 10); //drive forward
-//        encoderDrive(DRIVE_SPEED, -42, 42, 10); //turn 90 degrees left
-//        encoderDrive(DRIVE_SPEED, 24, 24, 10); //drive forward 1 block
 
 
 

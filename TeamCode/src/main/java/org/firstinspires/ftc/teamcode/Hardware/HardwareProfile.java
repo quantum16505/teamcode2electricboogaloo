@@ -36,10 +36,10 @@ public class HardwareProfile {
 
     // Bot wheel and motor parameters
     private double COUNTS_PER_MOTOR_REV = 384.5;
-    private double COUNTS_PER_CAROUSEL_REV = 28;
+    private double COUNTS_PER_CAROUSEL_REV = 384.5;
     private double DRIVE_GEAR_REDUCTION = 2.0;
     private double WHEEL_DIAMETER_INCHES = 3.779;
-    private double CAROUSEL_WHEEL_DIAMETER = 2.75;
+    private double CAROUSEL_WHEEL_DIAMETER = 4.75;
     public double CAROUSEL_COUNTS_PER_INCH = COUNTS_PER_CAROUSEL_REV / (CAROUSEL_WHEEL_DIAMETER * 3.1415);
     public double WHEEL_COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);

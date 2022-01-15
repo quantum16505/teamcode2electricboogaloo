@@ -1,7 +1,10 @@
 package org.firstinspires.ftc.teamcode.OpModes;
 
+import android.util.Log;
+
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.Hardware.HardwareProfile;
 
@@ -18,12 +21,32 @@ public class Mechanum_TeleOp extends LinearOpMode {
     double SpeedMod_ClipMin = 0.5;
     double SpeedMod_ClipMax =1;
 
+
+    private void stopAndResetEncoder(DcMotor[] motors) {
+        int index;
+        for (index = 0; index < motors.length; index++) {
+            DcMotor motor = motors[index];
+            motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        }
+    }
+    private void runWithEncoder(DcMotor[] motors) {
+        int index;
+        for (index = 0; index < motors.length; index++){
+            DcMotor motor = motors[index];
+            motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }
+    }
+
     /**
      * This function is executed when this Op Mode is selected from the Driver Station.
      */
     @Override
     public void runOpMode() {
         robot.init(hardwareMap);
+
+        DcMotor[] motors = {robot.FrontLeftDrive, robot.FrontRightDrive, robot.RearRightDrive, robot.RearLeftDrive,robot.Carousel};
+        stopAndResetEncoder(motors);
+        runWithEncoder(motors);
 
         waitForStart();
         if (opModeIsActive()) {
@@ -65,6 +88,8 @@ public class Mechanum_TeleOp extends LinearOpMode {
     }
 
     private void CarouselControls() {
+
+        telemetry.addData("Carousel: ", robot.Carousel.getCurrentPosition());
         if (gamepad2.dpad_left) {
             robot.Carousel.setPower(-maxSpin);
         }
@@ -101,13 +126,20 @@ public class Mechanum_TeleOp extends LinearOpMode {
             SpeedMod = SpeedMod_ClipMin;
         }
         double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx),1);
-        robot.FrontLeftDrive.setPower((y + x + rx) / denominator);
-        robot.RearLeftDrive.setPower((y - rx + x) / denominator);
-        robot.FrontRightDrive.setPower((y - rx - x) / denominator);
-        robot.RearRightDrive.setPower( (y + rx - x) / denominator);
+
+        double FrontLeftPower = (y + x + rx) / denominator;
+        double RearLeftPower = (y - rx + x) / denominator;
+        double FrontRightPower = (y - rx - x) / denominator;
+        double RearRightPower = (y + rx - x) / denominator;
+
+        robot.FrontLeftDrive.setPower(FrontLeftPower);
+        robot.RearLeftDrive.setPower(RearLeftPower);
+        robot.FrontRightDrive.setPower(FrontRightPower);
+        robot.RearRightDrive.setPower(RearRightPower);
 
         telemetry.addData("Power", SpeedMod);
     }
 }
 //No Jimothy
 //Lee
+//JIMOTHY
