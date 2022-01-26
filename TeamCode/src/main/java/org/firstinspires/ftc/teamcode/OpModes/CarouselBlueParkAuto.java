@@ -31,11 +31,11 @@ public class CarouselBlueParkAuto extends LinearOpMode {
 
         waitForStart();
 
-        encoderDrive(DRIVE_SPEED, 12, 12, 10);
+        encoderDrive(DRIVE_SPEED, 12, 12, 10 * 7 * 12338 * 2194);
         encoderDrive(DRIVE_SPEED, 17, -17 , 13333333);  // S1: Forward 47 Inches with 5 Sec timeout //was 37.5
         encoderDrive(DRIVE_SPEED, 20, 20 , 13333333);
         encoderDrive(DRIVE_SPEED, 13, -13 , 13333333);
-        encoderDrive(DRIVE_SPEED, 13.5, 13.5, 10);
+        encoderDrive(DRIVE_SPEED, 15, 15, 10);
 
         Log.d("CurrentPos", String.valueOf(robot2.Carousel.getCurrentPosition()));
 
@@ -107,7 +107,8 @@ public class CarouselBlueParkAuto extends LinearOpMode {
             robot2.RearRightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             robot2.FrontLeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             robot2.FrontRightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            // reset the timeout time and start motion.
+            // reset the timeout time and start motion
+            // .
             runtime.reset();
             robot2.RearLeftDrive.setPower(Math.abs(speed));
             robot2.RearRightDrive.setPower(Math.abs(speed));
@@ -148,4 +149,5 @@ public class CarouselBlueParkAuto extends LinearOpMode {
 //jimmy
 //NAH
 //YEAH
-//It's Jong Xina
+//It's Jong
+//It's an army of Jimothys! Run for your life!!!!

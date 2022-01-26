@@ -30,8 +30,7 @@ public class WarehouseAutoBlue extends LinearOpMode {
 
         //46.5
         waitForStart();
-        encoderDrive(DRIVE_SPEED, 5, -5, 5.0);
-        encoderDrive(DRIVE_SPEED, 59, 59, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
+        encoderDrive(DRIVE_SPEED, 30, 30, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
 //        encoderDrive(DRIVE_SPEED, 200, -200, 18.0);
     }
     private void stopAndResetEncoder(DcMotor[] motors) {

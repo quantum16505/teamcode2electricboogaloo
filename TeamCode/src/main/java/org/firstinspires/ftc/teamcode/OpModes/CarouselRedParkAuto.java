@@ -31,7 +31,7 @@ public class CarouselRedParkAuto extends LinearOpMode {
 
         waitForStart();
         encoderDrive(DRIVE_SPEED, 1.75, -1.75, 10);
-        encoderDrive(DRIVE_SPEED, 23, 23, 10.0);  // S1: Forward 47 Inches with 5 Sec timeout //was 37.5
+        encoderDrive(DRIVE_SPEED, 23.25, 23.25, 10.0);  // S1: Forward 47 Inches with 5 Sec timeout //was 37.5
 
 
 
@@ -48,7 +48,7 @@ public class CarouselRedParkAuto extends LinearOpMode {
 
         encoderDrive(DRIVE_SPEED, 14.45, -14.45, 140); //turn 90 degrees right
 
-        encoderDrive(DRIVE_SPEED, 22.345, 22.345, 10); //drive forward
+        encoderDrive(DRIVE_SPEED, 22.645, 22.645, 10); //drive forward
 //        encoderDrive(DRIVE_SPEED, -42, 42, 10); //turn 90 degrees left
 //        encoderDrive(DRIVE_SPEED, 24, 24, 10); //drive forward 1 block
 

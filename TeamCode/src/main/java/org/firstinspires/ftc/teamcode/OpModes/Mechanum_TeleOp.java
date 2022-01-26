@@ -44,9 +44,6 @@ public class Mechanum_TeleOp extends LinearOpMode {
     public void runOpMode() {
         robot.init(hardwareMap);
 
-        DcMotor[] motors = {robot.FrontLeftDrive, robot.FrontRightDrive, robot.RearRightDrive, robot.RearLeftDrive,robot.Carousel};
-        stopAndResetEncoder(motors);
-        runWithEncoder(motors);
 
         waitForStart();
         if (opModeIsActive()) {
