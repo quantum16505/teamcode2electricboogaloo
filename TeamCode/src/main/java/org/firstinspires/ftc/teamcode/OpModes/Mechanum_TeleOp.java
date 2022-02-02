@@ -76,12 +76,23 @@ public class Mechanum_TeleOp extends LinearOpMode {
         }
     }
     private void ArmControls() {
-        telemetry.addData("ArmStick" , gamepad1.left_stick_y );
-        if(gamepad2.left_stick_y > 0.05 || gamepad2.left_stick_y < 0.05)   {
-            robot.ArmServo.setPower(gamepad2.left_stick_y);
-        } else {
-            robot.ArmServo.setPower(0);
+        double armPos = robot.ArmServo.getPosition();
+
+        double newPos = armPos;
+        if(gamepad2.a) {
+            newPos = armPos + 0.002;
         }
+        if(gamepad2.y) {
+            newPos = armPos - 0.002;
+
+        }
+        if(newPos > 0.82) {
+            newPos = 0.82;
+        }
+        if(newPos < 0.2) {
+            newPos = 0.2;
+        }
+        robot.ArmServo.setPosition(newPos);
     }
 
     private void CarouselControls() {

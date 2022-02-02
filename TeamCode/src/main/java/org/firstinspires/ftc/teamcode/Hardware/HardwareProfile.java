@@ -30,7 +30,7 @@ public class HardwareProfile {
     public DcMotor FrontLeftDrive;
     public DcMotor FrontRightDrive;
     public DcMotor Carousel;
-    public CRServo ArmServo;
+    public Servo ArmServo;
     public CRServo IntakeLeft;
     public CRServo IntakeRight;
 
@@ -79,10 +79,9 @@ public class HardwareProfile {
         Carousel.setDirection(DcMotor.Direction.FORWARD);
         Carousel.setPower(0);
 
-        // define servos
+        // define servo
 
-
-        ArmServo = hwMap.get(CRServo.class, "armservo");
+        ArmServo = hwMap.get(Servo.class, "armservo");
         IntakeLeft = hwMap.get(CRServo.class, "intakeleft");
         IntakeRight = hwMap.get(CRServo.class, "intakeright");
 
